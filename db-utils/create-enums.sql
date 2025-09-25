@@ -1,0 +1,1 @@
+CREATE TYPE admin_user_tokens_status AS ENUM ('active', 'used', 'disabled');
