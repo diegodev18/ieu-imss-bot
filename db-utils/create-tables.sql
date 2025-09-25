@@ -18,7 +18,7 @@ CREATE TABLE
 CREATE TABLE
     sessions (
         id SERIAL PRIMARY KEY,
-        admin_user_id INTEGER UNIQUE REFERENCES admin_users (id) ON DELETE CASCADE,
+        admin_user_id INTEGER UNIQUE REFERENCES admin_user_tokens (id) ON DELETE CASCADE,
         chat_id BIGINT UNIQUE NOT NULL,
         user_metadata JSONB,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -28,6 +28,6 @@ CREATE TABLE
     employees (
         id SERIAL PRIMARY KEY,
         name TEXT NOT NULL,
-        created_by INTEGER REFERENCES admin_users (id) ON DELETE SET NULL,
+        created_by INTEGER REFERENCES admin_user_tokens (id) ON DELETE SET NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
