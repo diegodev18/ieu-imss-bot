@@ -2,23 +2,20 @@ import { authCommand } from "@/utils/commands/auth";
 import { startCommand } from "@/utils/commands/start";
 import { helpCommand } from "@/utils/commands/help";
 
-export const commands = [
-  {
-    name: "auth",
+export const commands = {
+  auth: {
     description: "Autentificate as admin",
     execute: authCommand,
   },
-];
+};
 
-export const seoCommands = [
-  {
-    command: "start",
+export const seoCommands = {
+  start: {
     description: "Start the bot",
     action: startCommand,
   },
-  {
-    command: "help",
+  help: {
     description: "Get help using the bot",
     action: helpCommand,
   },
-];
+};
