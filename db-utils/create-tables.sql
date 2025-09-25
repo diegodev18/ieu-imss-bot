@@ -1,7 +1,7 @@
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 CREATE TABLE
-    admin_users (
+    admin_user_tokens (
         id SERIAL PRIMARY KEY,
         -- user numérico aleatorio de 10 dígitos
         "user" BIGINT UNIQUE NOT NULL DEFAULT (
@@ -11,6 +11,7 @@ CREATE TABLE
         ),
         -- password aleatoria de 16 bytes en base64 (~22 caracteres)
         password TEXT NOT NULL DEFAULT (encode (gen_random_bytes (16), 'base64')),
+        status admin_user_tokens_status NOT NULL DEFAULT 'active',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -18,6 +19,15 @@ CREATE TABLE
     sessions (
         id SERIAL PRIMARY KEY,
         admin_user_id INTEGER UNIQUE REFERENCES admin_users (id) ON DELETE CASCADE,
-        session_metadata JSONB,
+        chat_id BIGINT UNIQUE NOT NULL,
+        user_metadata JSONB,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+CREATE TABLE
+    employees (
+        id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
+        created_by INTEGER REFERENCES admin_users (id) ON DELETE SET NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
