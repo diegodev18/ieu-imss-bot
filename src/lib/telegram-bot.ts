@@ -1,7 +1,8 @@
 import { Telegraf } from "telegraf";
+import { BOT_TOKEN } from "@/config";
 
-if (!process.env.BOT_TOKEN) {
+if (!BOT_TOKEN) {
   throw new Error("BOT_TOKEN must be provided!");
 }
 
-export const bot = new Telegraf(process.env.BOT_TOKEN);
+export const bot = new Telegraf(BOT_TOKEN);
