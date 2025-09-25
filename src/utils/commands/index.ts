@@ -2,14 +2,19 @@ import { authCommand } from "@/utils/commands/auth";
 import { startCommand } from "@/utils/commands/start";
 import { helpCommand } from "@/utils/commands/help";
 
-export const commands = {
+interface Command {
+  description: string;
+  action: (ctx: any) => void;
+}
+
+export const commands: Record<string, Command> = {
   auth: {
     description: "Autentificate as admin",
-    execute: authCommand,
+    action: authCommand,
   },
 };
 
-export const seoCommands = {
+export const seoCommands: Record<string, Command> = {
   start: {
     description: "Start the bot",
     action: startCommand,
