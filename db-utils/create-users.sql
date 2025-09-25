@@ -1,0 +1,4 @@
+INSERT INTO
+    admin_users DEFAULT
+VALUES
+    RETURNING *;
