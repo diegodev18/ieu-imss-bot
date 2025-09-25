@@ -13,3 +13,11 @@ CREATE TABLE
         password TEXT NOT NULL DEFAULT (encode (gen_random_bytes (16), 'base64')),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
+
+CREATE TABLE
+    sessions (
+        id SERIAL PRIMARY KEY,
+        admin_user_id INTEGER UNIQUE REFERENCES admin_users (id) ON DELETE CASCADE,
+        session_metadata JSONB,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
