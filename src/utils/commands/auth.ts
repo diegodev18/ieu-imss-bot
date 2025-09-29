@@ -1,5 +1,10 @@
 import { Context } from "telegraf";
 
 export const authCommand = (ctx: Context) => {
-  ctx.reply(`Hi ${ctx.from?.first_name ?? "there"}, Authenticating...`);
+  let message: string | undefined;
+  if (ctx.message && "text" in ctx.message) {
+    message = (ctx.message as { text: string }).text;
+  }
+
+  ctx.reply(`Received message: ${message}`);
 };
