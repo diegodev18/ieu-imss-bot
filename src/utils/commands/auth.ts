@@ -37,23 +37,29 @@ export const authCommand = async (ctx: Context) => {
 
   await ctx.reply("Autenticación exitosa, registrando sesión...");
 
-  prisma.admin_user_tokens.update({
-    where: { user: parseInt(user) },
-    data: { status: "used" },
-  });
-  prisma.sessions
-    .create({
+  try {
+    const updateToken = await prisma.admin_user_tokens.update({
+      where: { user: parseInt(user) },
+      data: { status: "used" },
+    });
+    console.log("Token actualizado:", updateToken.id);
+  } catch (error) {
+    await ctx.reply("Error al actualizar el estado del token.");
+    return;
+  }
+  try {
+    const createSession = await prisma.sessions.create({
       data: {
         chat_id: chatId,
         admin_user_tokens_id: isAuth.id,
         user_metadata: JSON.stringify(ctx.from),
       },
-    })
-    .then(() => {
-      ctx.reply("Sesión registrada correctamente.");
-    })
-    .catch((err) => {
-      console.error(err);
-      ctx.reply("Error al registrar la sesión.");
     });
+    console.log("Sesión creada:", createSession.id);
+  } catch (error) {
+    await ctx.reply("Error al crear la sesión.");
+    return;
+  }
+
+  await ctx.reply("Sesión registrada exitosamente.");
 };
