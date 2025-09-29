@@ -14,14 +14,7 @@ export const sessionMiddleware = async (
   const session = await prisma.sessions.findFirst({
     where: { chat_id: chatId },
   });
-  if (!session) {
-    await ctx.reply(
-      "No estás autenticado. Usa /auth <username> <contraseña> para autenticarte.",
-    );
-    return;
-  }
 
-  // Attach session info to context for downstream handlers
   (ctx as any).session = session;
 
   await next();
