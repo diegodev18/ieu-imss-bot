@@ -24,7 +24,7 @@ export const authCommand = async (ctx: Context) => {
   const isAuth = await prisma.admin_user_tokens.findFirst({
     where: { user: parseInt(user), password: pass },
   });
-  if (!isAuth) {
+  if (!isAuth || isAuth.status !== "active") {
     await ctx.reply("Credenciales inválidas");
     return;
   }
@@ -35,17 +35,25 @@ export const authCommand = async (ctx: Context) => {
     return;
   }
 
-  await ctx.reply("Autenticación exitosa, registrando chat ID...");
+  await ctx.reply("Autenticación exitosa, registrando sesión...");
 
   prisma.admin_user_tokens.update({
     where: { user: parseInt(user) },
     data: { status: "used" },
   });
-  prisma.sessions.create({
-    data: {
-      chat_id: chatId,
-      admin_user_tokens_id: isAuth.id,
-      user_metadata: JSON.stringify(ctx.from),
-    },
-  });
+  prisma.sessions
+    .create({
+      data: {
+        chat_id: chatId,
+        admin_user_tokens_id: isAuth.id,
+        user_metadata: JSON.stringify(ctx.from),
+      },
+    })
+    .then(() => {
+      ctx.reply("Sesión registrada correctamente.");
+    })
+    .catch((err) => {
+      console.error(err);
+      ctx.reply("Error al registrar la sesión.");
+    });
 };
