@@ -20,5 +20,8 @@ export const authCommand = async (ctx: Context) => {
     where: { user: parseInt(user), password: pass },
   });
   if (isAuth) {
+    await ctx.reply("Authentication successful");
+  } else {
+    await ctx.reply("Invalid credentials");
   }
 };
