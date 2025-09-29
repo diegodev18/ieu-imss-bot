@@ -28,6 +28,12 @@ CREATE TABLE
     employees (
         id SERIAL PRIMARY KEY,
         name TEXT NOT NULL,
+        curp TEXT UNIQUE NOT NULL,
+        rfc TEXT UNIQUE NOT NULL,
+        company TEXT NOT NULL,
+        position TEXT NOT NULL,
+        salary NUMERIC(10, 2) NOT NULL,
+        status employees_status NOT NULL DEFAULT 'active',
         created_by INTEGER REFERENCES admin_user_tokens (id) ON DELETE SET NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
