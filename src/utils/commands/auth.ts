@@ -1,8 +1,8 @@
-import { Context } from "telegraf";
+import { ContextWithSession } from "@/types";
 import { prisma } from "@/lib/prisma";
 
-export const authCommand = async (ctx: Context) => {
-  if (await prisma.sessions.findFirst({ where: { chat_id: ctx.chat?.id } })) {
+export const authCommand = async (ctx: ContextWithSession) => {
+  if (!ctx.session) {
     await ctx.reply("Ya estás autenticado.");
     return;
   }
