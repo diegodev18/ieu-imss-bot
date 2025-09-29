@@ -30,6 +30,11 @@ export const authCommand = async (ctx: Context) => {
   }
 
   const chatId = ctx.chat?.id;
+  if (!chatId) {
+    await ctx.reply("No se pudo obtener el chat ID.");
+    return;
+  }
+
   await ctx.reply("Autenticación exitosa, registrando chat ID...");
 
   prisma.admin_user_tokens.update({
@@ -38,7 +43,7 @@ export const authCommand = async (ctx: Context) => {
   });
   prisma.sessions.create({
     data: {
-      chat_id: chatId!,
+      chat_id: chatId,
       admin_user_tokens_id: isAuth.id,
       user_metadata: JSON.stringify(ctx.from),
     },
