@@ -2,7 +2,7 @@ import { ContextWithSession } from "@/types";
 import { prisma } from "@/lib/prisma";
 
 export const authCommand = async (ctx: ContextWithSession) => {
-  if (!ctx.session) {
+  if (ctx.session) {
     await ctx.reply("Ya estás autenticado.");
     return;
   }
