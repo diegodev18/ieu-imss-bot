@@ -1,4 +1,4 @@
 INSERT INTO
-    admin_user_tokens DEFAULT
+    admins DEFAULT
 VALUES
     RETURNING *;
