@@ -13,4 +13,6 @@ Object.entries(commands).forEach(([command, { action }]) => {
   bot.command(command, (ctx) => action(ctx));
 });
 
-bot.launch();
+bot.launch(() => {
+  console.log("Bot is running...");
+});
