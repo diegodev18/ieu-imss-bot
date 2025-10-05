@@ -29,6 +29,7 @@ export const get = async (contents: string, rules: string = "") => {
 
       switch (functionName) {
         case "addNewEmployee":
+          console.log("Adding new employee with args:", functionArgs);
           //   // Call your function to add a new employee with the provided arguments
           //   // Example: await addNewEmployee(functionArgs);
           return `Función ${functionName} llamada con argumentos: ${JSON.stringify(
