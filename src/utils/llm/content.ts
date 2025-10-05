@@ -7,7 +7,7 @@ export const get = async (contents: string) => {
       contents,
       config: {
         temperature: 0.7,
-        maxOutputTokens: 1024,
+        maxOutputTokens: 500,
         systemInstruction: promptRules,
         thinkingConfig: {
           thinkingBudget: 0,
