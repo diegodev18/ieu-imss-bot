@@ -8,7 +8,7 @@ interface Command {
   action: (ctx: any) => void;
 }
 
-type Commands = "auth" | "new";
+type Commands = "auth";
 
 type SeoCommands = "start" | "help";
 
@@ -16,10 +16,6 @@ export const commands: Record<Commands, Command> = {
   auth: {
     description: "Autentificate as admin",
     action: authCommand,
-  },
-  new: {
-    description: "Create a new employee",
-    action: newCommand,
   },
 };
 

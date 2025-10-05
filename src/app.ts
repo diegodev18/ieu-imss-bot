@@ -1,6 +1,7 @@
 import { bot } from "@/lib/telegram-bot";
 import { commands, seoCommands } from "@/utils/commands";
 import { sessionMiddleware } from "@/utils/middlewares";
+import { get as getContent } from "@/utils/llm/content";
 
 bot.use(sessionMiddleware);
 
@@ -12,8 +13,19 @@ bot.help((ctx) => {
   seoCommands.help.action(ctx);
 });
 
-Object.entries(commands).forEach(([command, { action }]) => {
-  bot.command(command, (ctx) => action(ctx));
+bot.command("auth", commands.auth.action);
+
+bot.on("text", async (ctx) => {
+  if (!("session" in ctx) || !ctx.session) {
+    ctx.reply(
+      "No session found. Please start a session first. Use /auth <username> <password>",
+    );
+    return;
+  }
+
+  const response = await getContent(ctx.message.text);
+
+  ctx.reply(response?.text ?? "No response from LLM.");
 });
 
 bot.launch(() => {
