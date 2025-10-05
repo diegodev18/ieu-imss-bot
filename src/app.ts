@@ -25,7 +25,7 @@ bot.on("text", async (ctx) => {
 
   const response = await getContent(ctx.message.text);
 
-  ctx.reply(response?.text ?? "No response from LLM.");
+  ctx.reply(response ?? "No response from LLM.");
 });
 
 bot.launch(() => {

@@ -31,18 +31,19 @@ export const get = async (contents: string, rules: string = "") => {
         case "addNewEmployee":
           //   // Call your function to add a new employee with the provided arguments
           //   // Example: await addNewEmployee(functionArgs);
-          return `Function ${functionName} called with arguments: ${JSON.stringify(
+          return `Función ${functionName} llamada con argumentos: ${JSON.stringify(
             functionArgs,
           )}`;
 
         default:
-          return `Unknown function: ${functionName}`;
+          return `Función desconocida: ${functionName}`;
       }
     }
 
-    return response;
+    return response.text ?? "No response from LLM.";
   } catch (error) {
     console.error("Error generating content:", error);
-    return null;
+
+    return "Ocurrió un error al procesar tu solicitud.";
   }
 };
