@@ -1,4 +1,5 @@
 import { ai } from "@/lib/llm";
+import { rules as promptRules } from "./prompt";
 
 export const get = async (contents: string) => {
   try {
@@ -7,6 +8,7 @@ export const get = async (contents: string) => {
       config: {
         temperature: 0.7,
         maxOutputTokens: 1024,
+        systemInstruction: promptRules,
       },
       model: "gemini-2.5-flash",
     });
