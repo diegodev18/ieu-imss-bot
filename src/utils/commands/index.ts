@@ -1,7 +1,6 @@
 import { authCommand } from "@/utils/commands/auth";
 import { startCommand } from "@/utils/commands/start";
 import { helpCommand } from "@/utils/commands/help";
-import { newCommand } from "@/utils/commands/new";
 
 interface Command {
   description: string;
