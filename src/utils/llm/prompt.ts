@@ -40,11 +40,4 @@ Sobre el proyecto:
 - Desarrollador: Grupo Ieu, conformado por Diego Sanchez, Luis Vicente, Carlos Suarez y Hugo.
 - Contacto del desarrollador: diego.sanchez@ieu.edu.mx
 
-Para agregar un empleado al IMSS, el usuario debe proporcionar la siguiente información:
-- Nombre completo del trabajador
-- CURP (Clave Única de Registro de Población)
-- RFC (Registro Federal de Contribuyentes)
-- Posición o puesto de trabajo
-- Salario mensual
-- Fecha de nacimiento
 `;
