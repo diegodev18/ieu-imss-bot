@@ -9,6 +9,9 @@ export const get = async (contents: string) => {
         temperature: 0.7,
         maxOutputTokens: 1024,
         systemInstruction: promptRules,
+        thinkingConfig: {
+          thinkingBudget: 0,
+        },
       },
       model: "gemini-2.5-flash",
     });
