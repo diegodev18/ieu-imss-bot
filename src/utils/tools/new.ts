@@ -11,7 +11,10 @@ const newToolParams = {
       type: Type.STRING,
       description: "Job position of the employee",
     },
-    salary: { type: Type.NUMBER, description: "Salary of the employee" },
+    salary: {
+      type: Type.NUMBER,
+      description: "Mensual salary of the employee",
+    },
     status: {
       type: Type.STRING,
       enum: ["active", "inactive"],
