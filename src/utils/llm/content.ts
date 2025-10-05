@@ -1,5 +1,6 @@
 import { ai } from "@/lib/llm";
 import { rules as promptRules } from "@/utils/llm/prompt";
+import { toolsDeclarations } from "@/utils/tools";
 
 export const get = async (contents: string, rules: string = "") => {
   try {
@@ -12,6 +13,11 @@ export const get = async (contents: string, rules: string = "") => {
         thinkingConfig: {
           thinkingBudget: 0,
         },
+        tools: [
+          {
+            functionDeclarations: [...toolsDeclarations],
+          },
+        ],
       },
       model: "gemini-2.5-flash",
     });

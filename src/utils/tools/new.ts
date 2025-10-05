@@ -1,19 +1,23 @@
 import { prisma } from "@/lib/prisma";
+import { Type } from "@google/genai";
 
 const newToolParams = {
-  type: "object",
+  type: Type.OBJECT,
   properties: {
-    name: { type: "string", description: "Full name of the employee" },
-    curp: { type: "string", description: "CURP of the employee" },
-    rfc: { type: "string", description: "RFC of the employee" },
-    position: { type: "string", description: "Job position of the employee" },
-    salary: { type: "number", description: "Salary of the employee" },
+    name: { type: Type.STRING, description: "Full name of the employee" },
+    curp: { type: Type.STRING, description: "CURP of the employee" },
+    rfc: { type: Type.STRING, description: "RFC of the employee" },
+    position: {
+      type: Type.STRING,
+      description: "Job position of the employee",
+    },
+    salary: { type: Type.NUMBER, description: "Salary of the employee" },
     status: {
-      type: "string",
+      type: Type.STRING,
       enum: ["active", "inactive"],
       description: "Employment status",
     },
-    companyId: { type: "number", description: "ID of the company" },
+    companyId: { type: Type.NUMBER, description: "ID of the company" },
   },
   required: ["name", "curp", "rfc", "position", "salary", "companyId"],
 };
