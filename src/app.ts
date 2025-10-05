@@ -15,7 +15,9 @@ bot.help((ctx) => {
 
 bot.on("text", async (ctx) => {
   if (!("session" in ctx) || !ctx.session) {
-    ctx.reply("No session found. Please start a session first.");
+    ctx.reply(
+      "No session found. Please start a session first. Use /auth <username> <password>",
+    );
     return;
   }
 
