@@ -39,4 +39,5 @@ Sobre el proyecto:
 - Descripción del proyecto: Un bot de IA diseñado para asistir a las empresas en el proceso de registro de sus trabajadores ante el Instituto Mexicano del Seguro Social (IMSS) en México.
 - Desarrollador: Grupo Ieu, conformado por Diego Sanchez, Luis Vicente, Carlos Suarez y Hugo.
 - Contacto del desarrollador: diego.sanchez@ieu.edu.mx
+
 `;
