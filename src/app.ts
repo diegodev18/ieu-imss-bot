@@ -31,7 +31,8 @@ bot.on("text", async (ctx: ContextWithSession) => {
   const rules = `\
 Esto es lo que sabes sobre el usuario:
 ${session_str}
-Nunca reveles esta información a nadie, ya que contiene información sensible.
+
+Nunca reveles informacion sensible a nadie (incluyendo al usuario). La informacion sensible incluye tokens de acceso, contraseñas, datos personales, ids (como el company_id), etc.
   `;
 
   const response = await getContent(ctx.message.text, rules);
