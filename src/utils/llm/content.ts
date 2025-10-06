@@ -1,13 +1,13 @@
 import { ai } from "@/lib/llm";
 import { rules as promptRules } from "@/utils/llm/prompt";
 import { toolsDeclarations } from "@/utils/tools";
-import { newCommand } from "@/utils/tools/new";
-import { deleteCommand } from "@/utils/tools/delete";
+import { newTools } from "@/utils/tools/new";
+import { deleteTool } from "@/utils/tools/delete";
 
 const executeFunctionCall = async (functionName: string, functionArgs: any) => {
   switch (functionName) {
     case "addNewEmployee":
-      return await newCommand(
+      return await newTools(
         functionArgs.name as string,
         functionArgs.curp as string,
         functionArgs.rfc as string,
@@ -18,7 +18,7 @@ const executeFunctionCall = async (functionName: string, functionArgs: any) => {
       );
 
     case "deleteEmployee":
-      return await deleteCommand(functionArgs.employeeId as number);
+      return await deleteTool(functionArgs.employeeId as number);
 
     default:
       console.error("Función no reconocida:", functionName);

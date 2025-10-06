@@ -21,7 +21,7 @@ export const deleteToolDeclaration = {
   parameters: deleteToolParams,
 };
 
-export const deleteCommand = async (
+export const deleteTool = async (
   employeeId?: number,
   curp?: string,
   rfc?: string,
