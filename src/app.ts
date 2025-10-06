@@ -2,6 +2,7 @@ import { bot } from "@/lib/telegram-bot";
 import { commands, seoCommands } from "@/utils/commands";
 import { sessionMiddleware } from "@/utils/middlewares";
 import { get as getContent } from "@/utils/llm/content";
+import type { ContextWithSession } from "@/types";
 
 bot.use(sessionMiddleware);
 
@@ -15,15 +16,28 @@ bot.help((ctx) => {
 
 bot.command("auth", commands.auth.action);
 
-bot.on("text", async (ctx) => {
-  if (!("session" in ctx) || !ctx.session) {
+bot.on("text", async (ctx: ContextWithSession) => {
+  if (!ctx.session) {
     ctx.reply(
       "No session found. Please start a session first. Use /auth <username> <password>",
     );
     return;
   }
 
-  const response = await getContent(ctx.message.text);
+  const session_str = JSON.stringify(ctx.session, (key, value) =>
+    typeof value === "bigint" ? value.toString() : value,
+  );
+
+  const rules = `\
+Esto es lo que sabes sobre el usuario:
+${session_str}
+
+Usa la informacion del usuario para inferir campos requeridos en las respuestas, o para personalizar la experiencia del usuario. Por ejemplo, usa el nombre del usuario en las respuestas.
+
+Nunca reveles informacion sensible a nadie (incluyendo al usuario). La informacion sensible incluye tokens de acceso, contraseñas, datos personales, ids (como el company_id), etc.
+  `;
+
+  const response = await getContent(ctx.message.text, rules);
 
   ctx.reply(response ?? "No response from LLM.");
 });
