@@ -11,6 +11,7 @@ const deleteToolParams = {
     curp: { type: Type.STRING, description: "CURP of the employee to delete" },
     rfc: { type: Type.STRING, description: "RFC of the employee to delete" },
   },
+  required: [],
 };
 
 export const deleteToolDeclaration = {
