@@ -3,6 +3,7 @@ import { rules as promptRules } from "@/utils/llm/prompt";
 import { toolsDeclarations } from "@/utils/tools";
 import { newTools } from "@/utils/tools/new";
 import { deleteTool } from "@/utils/tools/delete";
+import { listTool } from "@/utils/tools/list";
 
 const executeFunctionCall = async (functionName: string, functionArgs: any) => {
   switch (functionName) {
@@ -23,6 +24,9 @@ const executeFunctionCall = async (functionName: string, functionArgs: any) => {
         functionArgs.curp as string,
         functionArgs.rfc as string,
       );
+
+    case "listEmployees":
+      return await listTool(functionArgs.companyId as number);
 
     default:
       console.error("Función no reconocida:", functionName);
