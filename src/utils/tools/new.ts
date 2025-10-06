@@ -20,9 +20,8 @@ const newToolParams = {
       enum: ["active", "inactive"],
       description: "Employment status",
     },
-    companyId: { type: Type.NUMBER, description: "ID of the company" },
   },
-  required: ["name", "curp", "rfc", "position", "salary", "companyId"],
+  required: ["name", "curp", "rfc", "position", "salary"],
 };
 
 export const newToolDeclaration = {

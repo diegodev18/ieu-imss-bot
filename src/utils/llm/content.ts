@@ -19,7 +19,7 @@ const executeFunctionCall = async (
         functionArgs.position as string,
         functionArgs.salary as number,
         (functionArgs.status as "active" | "inactive") || "active",
-        functionArgs.companyId as number,
+        session.company.id as number,
       );
 
     case "deleteEmployee":
