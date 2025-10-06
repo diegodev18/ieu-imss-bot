@@ -27,7 +27,7 @@ export const listTool = async (companyId: number) => {
       return "No employees found for the given company.";
     }
 
-    return `Employees found: ${employees.map((emp) => emp.name).join(", ")}`;
+    return `Employees found: ${employees.map((emp) => JSON.stringify(emp)).join(", ")}`;
   } catch (error: any) {
     console.error("Error fetching employees:", error);
 
