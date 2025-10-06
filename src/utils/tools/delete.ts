@@ -15,7 +15,8 @@ const deleteToolParams = {
 
 export const deleteToolDeclaration = {
   name: "deleteEmployee",
-  description: "Delete an employee from the system",
+  description:
+    "Delete an employee from the system or set their status to inactive",
   parameters: deleteToolParams,
 };
 
