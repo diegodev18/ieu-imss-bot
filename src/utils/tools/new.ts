@@ -20,9 +20,8 @@ const newToolParams = {
       enum: ["active", "inactive"],
       description: "Employment status",
     },
-    companyId: { type: Type.NUMBER, description: "ID of the company" },
   },
-  required: ["name", "curp", "rfc", "position", "salary", "companyId"],
+  required: ["name", "curp", "rfc", "position", "salary"],
 };
 
 export const newToolDeclaration = {
@@ -40,8 +39,12 @@ export const newTools = async (
   status: "active" | "inactive" = "active",
   companyId: number,
 ) => {
-  if (!name || !curp || !rfc || !position || !salary || !companyId) {
-    return "All fields are required.";
+  const missingFields = [name, curp, rfc, position, salary, companyId].filter(
+    (field) => !field,
+  );
+  if (missingFields.length > 0) {
+    console.error("Missing required fields:", missingFields);
+    return `Missing required fields: ${missingFields.join(", ")}`;
   }
 
   const existingEmployee = await prisma.employees.findFirst({
