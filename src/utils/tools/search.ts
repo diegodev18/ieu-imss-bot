@@ -23,7 +23,8 @@ const searchToolParams = {
 
 export const searchToolDeclaration = {
   name: "searchTool",
-  description: "Use this tool to search for items in the database.",
+  description:
+    "Search for employees in the database. You can search by name only, CURP only, or both. All parameters are optional - use whatever information the user provides. If the user only gives you a name, search by name without asking for CURP or RFC.",
   parameters: searchToolParams,
 };
 
