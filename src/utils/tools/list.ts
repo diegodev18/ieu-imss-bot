@@ -9,7 +9,7 @@ const listToolParams = {
 
 export const listToolDeclaration = {
   name: "listEmployees",
-  description: "List all employees in the system for a given company",
+  description: "List all employees in the system (database)",
   parameters: listToolParams,
 };
 
