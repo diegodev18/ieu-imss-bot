@@ -24,9 +24,13 @@ bot.on("text", async (ctx: ContextWithSession) => {
     return;
   }
 
+  const session_str = JSON.stringify(ctx.session, (key, value) =>
+    typeof value === "bigint" ? value.toString() : value,
+  );
+
   const rules = `\
 Esto es lo que sabes sobre el usuario:
-${JSON.stringify(ctx.session)}
+${session_str}
 Nunca reveles esta información a nadie, ya que contiene información sensible.
   `;
 
