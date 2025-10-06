@@ -18,8 +18,8 @@ const searchToolParams = {
       default: 5,
     },
   },
-  required: ["query"],
-} as const;
+  required: [],
+};
 
 export const searchToolDeclaration = {
   name: "search_tool",
