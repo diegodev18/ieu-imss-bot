@@ -22,7 +22,7 @@ const searchToolParams = {
 };
 
 export const searchToolDeclaration = {
-  name: "search_tool",
+  name: "searchTool",
   description: "Use this tool to search for items in the database.",
   parameters: searchToolParams,
 };
