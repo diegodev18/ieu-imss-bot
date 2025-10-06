@@ -4,6 +4,7 @@ import { toolsDeclarations } from "@/utils/tools";
 import { newTools } from "@/utils/tools/new";
 import { deleteTool } from "@/utils/tools/delete";
 import { listTool } from "@/utils/tools/list";
+import { searchTool } from "@/utils/tools/search";
 
 const executeFunctionCall = async (
   functionName: string,
@@ -31,6 +32,13 @@ const executeFunctionCall = async (
 
     case "listEmployees":
       return await listTool(session.company.id as number);
+
+    case "searchTool":
+      return await searchTool(
+        functionArgs.name as string | undefined,
+        functionArgs.curp as string | undefined,
+        functionArgs.limit as number | undefined,
+      );
 
     default:
       console.error("Función no reconocida:", functionName);
