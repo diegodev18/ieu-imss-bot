@@ -43,8 +43,11 @@ export const deleteCommand = async (
   }
 
   try {
-    await prisma.employees.delete({
+    await prisma.employees.update({
       where: { id: existingEmployee.id },
+      data: {
+        status: "inactive",
+      },
     });
     return `Employee with ID ${existingEmployee.id} has been successfully deleted.`;
   } catch (error) {
