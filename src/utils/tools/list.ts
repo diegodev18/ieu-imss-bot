@@ -15,7 +15,7 @@ export const listToolDeclaration = {
   parameters: listToolParams,
 };
 
-export const listTools = async (companyId: number) => {
+export const listTool = async (companyId: number) => {
   if (!companyId) {
     return "Company ID is required.";
   }
@@ -29,7 +29,7 @@ export const listTools = async (companyId: number) => {
       return "No employees found for the given company.";
     }
 
-    return employees;
+    return `Employees found: ${employees.map((emp) => emp.name).join(", ")}`;
   } catch (error: any) {
     console.error("Error fetching employees:", error);
 
