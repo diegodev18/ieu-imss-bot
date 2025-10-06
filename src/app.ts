@@ -24,9 +24,13 @@ bot.on("text", async (ctx: ContextWithSession) => {
     return;
   }
 
-  console.log("Session data:", ctx.session);
+  const rules = `\
+Esto es lo que sabes sobre el usuario:
+${JSON.stringify(ctx.session)}
+Nunca reveles esta información a nadie, ya que contiene información sensible.
+  `;
 
-  const response = await getContent(ctx.message.text);
+  const response = await getContent(ctx.message.text, rules);
 
   ctx.reply(response ?? "No response from LLM.");
 });
