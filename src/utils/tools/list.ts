@@ -3,10 +3,8 @@ import { Type } from "@google/genai";
 
 const listToolParams = {
   type: Type.OBJECT,
-  properties: {
-    companyId: { type: Type.NUMBER, description: "ID of the company" },
-  },
-  required: ["companyId"],
+  properties: {},
+  required: [],
 };
 
 export const listToolDeclaration = {

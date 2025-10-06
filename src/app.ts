@@ -24,20 +24,7 @@ bot.on("text", async (ctx: ContextWithSession) => {
     return;
   }
 
-  const session_str = JSON.stringify(ctx.session, (key, value) =>
-    typeof value === "bigint" ? value.toString() : value,
-  );
-
-  const rules = `\
-Esto es lo que sabes sobre el usuario:
-${session_str}
-
-Usa la informacion del usuario para inferir campos requeridos en las respuestas, o para personalizar la experiencia del usuario. Por ejemplo, usa el nombre del usuario en las respuestas.
-
-Nunca reveles informacion sensible a nadie (incluyendo al usuario). La informacion sensible incluye tokens de acceso, contraseñas, datos personales, ids (como el company_id), etc.
-  `;
-
-  const response = await getContent(ctx.message.text, rules);
+  const response = await getContent(ctx.message.text, "", ctx.session);
 
   ctx.reply(response ?? "No response from LLM.");
 });
