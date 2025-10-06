@@ -18,7 +18,11 @@ const executeFunctionCall = async (functionName: string, functionArgs: any) => {
       );
 
     case "deleteEmployee":
-      return await deleteTool(functionArgs.employeeId as number);
+      return await deleteTool(
+        functionArgs.employeeId as number,
+        functionArgs.curp as string,
+        functionArgs.rfc as string,
+      );
 
     default:
       console.error("Función no reconocida:", functionName);
