@@ -17,7 +17,8 @@ const executeFunctionCall = async (functionName: string, functionArgs: any) => {
       );
 
     default:
-      throw new Error(`Función desconocida: ${functionName}`);
+      console.error("Función no reconocida:", functionName);
+      return "Función desconocida.";
   }
 };
 
