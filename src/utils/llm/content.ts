@@ -4,8 +4,6 @@ import { toolsDeclarations } from "@/utils/tools";
 import { newCommand } from "@/utils/tools/new";
 
 const executeFunctionCall = async (functionName: string, functionArgs: any) => {
-  console.log(`Ejecutando función: ${functionName}`, functionArgs);
-
   switch (functionName) {
     case "addNewEmployee":
       return await newCommand(
@@ -23,28 +21,29 @@ const executeFunctionCall = async (functionName: string, functionArgs: any) => {
   }
 };
 
+const getContent = async (contents: string | any[], rules: string = "") =>
+  await ai.models.generateContent({
+    contents,
+    config: {
+      temperature: 0.7,
+      maxOutputTokens: 500,
+      systemInstruction: promptRules + rules,
+      thinkingConfig: {
+        thinkingBudget: 0,
+      },
+      tools: [
+        {
+          functionDeclarations: [...toolsDeclarations],
+        },
+      ],
+    },
+    model: "gemini-2.5-flash",
+  });
+
 export const get = async (contents: string, rules: string = "") => {
   try {
-    // Primera llamada al LLM
-    const response = await ai.models.generateContent({
-      contents,
-      config: {
-        temperature: 0.7,
-        maxOutputTokens: 500,
-        systemInstruction: promptRules + rules,
-        thinkingConfig: {
-          thinkingBudget: 0,
-        },
-        tools: [
-          {
-            functionDeclarations: [...toolsDeclarations],
-          },
-        ],
-      },
-      model: "gemini-2.5-flash",
-    });
+    const response = await getContent(contents, rules);
 
-    // Si el LLM quiere llamar a una función
     if (response.functionCalls && response.functionCalls.length > 0) {
       const functionCall = response.functionCalls[0];
       const functionName = functionCall.name;
@@ -55,51 +54,33 @@ export const get = async (contents: string, rules: string = "") => {
       }
 
       try {
-        // Ejecutar la función
         const functionResult = await executeFunctionCall(
           functionName,
           functionArgs,
         );
 
-        console.log("Resultado de la función:", functionResult);
-
-        // Segunda llamada al LLM con el resultado de la función
-        const followUpResponse = await ai.models.generateContent({
-          contents: [
-            { role: "user", parts: [{ text: contents }] },
-            {
-              role: "model",
-              parts: [
-                { functionCall: { name: functionName, args: functionArgs } },
-              ],
-            },
-            {
-              role: "function",
-              parts: [
-                {
-                  functionResponse: {
-                    name: functionName,
-                    response: { result: functionResult },
-                  },
-                },
-              ],
-            },
-          ],
-          config: {
-            temperature: 0.7,
-            maxOutputTokens: 500,
-            systemInstruction: promptRules + rules,
-            thinkingConfig: {
-              thinkingBudget: 0,
-            },
-            tools: [
+        const contentsPayload = [
+          { role: "user", parts: [{ text: contents }] },
+          {
+            role: "model",
+            parts: [
+              { functionCall: { name: functionName, args: functionArgs } },
+            ],
+          },
+          {
+            role: "function",
+            parts: [
               {
-                functionDeclarations: [...toolsDeclarations],
+                functionResponse: {
+                  name: functionName,
+                  response: { result: functionResult },
+                },
               },
             ],
           },
-          model: "gemini-2.5-flash",
-        });
+        ];
+
+        const followUpResponse = await getContent(contentsPayload, rules);
 
         return followUpResponse.text ?? functionResult;
       } catch (error) {
