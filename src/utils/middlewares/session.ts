@@ -19,6 +19,12 @@ export const sessionMiddleware = async (
     return await next();
   }
 
+  try {
+    session.user_metadata = session.user_metadata
+      ? JSON.parse(session.user_metadata)
+      : {};
+  } catch {}
+
   const admin = await prisma.admins.findFirst({
     where: { id: session.id },
   });
