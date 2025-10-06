@@ -2,6 +2,7 @@ import { ai } from "@/lib/llm";
 import { rules as promptRules } from "@/utils/llm/prompt";
 import { toolsDeclarations } from "@/utils/tools";
 import { newCommand } from "@/utils/tools/new";
+import { deleteCommand } from "@/utils/tools/delete";
 
 const executeFunctionCall = async (functionName: string, functionArgs: any) => {
   switch (functionName) {
@@ -15,6 +16,9 @@ const executeFunctionCall = async (functionName: string, functionArgs: any) => {
         (functionArgs.status as "active" | "inactive") || "active",
         functionArgs.companyId as number,
       );
+
+    case "deleteEmployee":
+      return await deleteCommand(functionArgs.employeeId as number);
 
     default:
       console.error("Función no reconocida:", functionName);
