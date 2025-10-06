@@ -27,11 +27,15 @@ export const searchToolDeclaration = {
   parameters: searchToolParams,
 };
 
-export const searchTool = async (name: string, curp: string, limit = 5) => {
+export const searchTool = async (
+  name: string | undefined,
+  curp: string | undefined,
+  limit = 5,
+) => {
   try {
     const results = await prisma.employees.findMany({
       where: {
-        AND: [
+        OR: [
           name
             ? {
                 name: {
