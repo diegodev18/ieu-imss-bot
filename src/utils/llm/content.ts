@@ -2,14 +2,15 @@ import { ai } from "@/lib/llm";
 import { rules as promptRules } from "@/utils/llm/prompt";
 import { toolsDeclarations } from "@/utils/tools";
 import { newTools } from "@/utils/tools/new";
-import { deleteTool } from "@/utils/tools/delete";
+import { updateTool } from "@/utils/tools/update";
 import { listTool } from "@/utils/tools/list";
 import { searchTool } from "@/utils/tools/search";
+import type { Session } from "@/types";
 
 const executeFunctionCall = async (
   functionName: string,
   functionArgs: any,
-  session: any,
+  session: Session,
 ) => {
   switch (functionName) {
     case "addNewEmployee":
@@ -23,8 +24,10 @@ const executeFunctionCall = async (
         session.company.id as number,
       );
 
-    case "deleteEmployee":
-      return await deleteTool(
+    case "updateEmployee":
+      return await updateTool(
+        functionArgs.propertyToUpdate as string,
+        functionArgs.newValue as string,
         functionArgs.employeeId as number,
         functionArgs.curp as string,
         functionArgs.rfc as string,
@@ -53,9 +56,6 @@ const getContent = async (contents: string | any[], rules: string = "") =>
       temperature: 0.7,
       maxOutputTokens: 500,
       systemInstruction: promptRules + rules,
-      thinkingConfig: {
-        thinkingBudget: 0,
-      },
       tools: [
         {
           functionDeclarations: [...toolsDeclarations],

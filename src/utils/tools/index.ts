@@ -1,12 +1,12 @@
 import { newToolDeclaration } from "@/utils/tools/new";
-import { deleteToolDeclaration } from "@/utils/tools/delete";
+import { updateToolDeclaration } from "@/utils/tools/update";
 import { listToolDeclaration } from "@/utils/tools/list";
 import { searchToolDeclaration } from "@/utils/tools/search";
 import type { FunctionDeclaration } from "@google/genai";
 
 export const toolsDeclarations: FunctionDeclaration[] = [
   newToolDeclaration,
-  deleteToolDeclaration,
+  updateToolDeclaration,
   listToolDeclaration,
   searchToolDeclaration,
 ];
