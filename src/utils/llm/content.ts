@@ -2,7 +2,7 @@ import { ai } from "@/lib/llm";
 import { rules as promptRules } from "@/utils/llm/prompt";
 import { toolsDeclarations } from "@/utils/tools";
 import { newTools } from "@/utils/tools/new";
-import { deleteTool } from "@/utils/tools/delete";
+import { updateTool } from "@/utils/tools/update";
 import { listTool } from "@/utils/tools/list";
 import { searchTool } from "@/utils/tools/search";
 
@@ -23,8 +23,8 @@ const executeFunctionCall = async (
         session.company.id as number,
       );
 
-    case "deleteEmployee":
-      return await deleteTool(
+    case "updateEmployee":
+      return await updateTool(
         functionArgs.employeeId as number,
         functionArgs.curp as string,
         functionArgs.rfc as string,
