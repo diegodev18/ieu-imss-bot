@@ -10,8 +10,17 @@ const updateToolParams: Schema = {
     },
     curp: { type: Type.STRING, description: "CURP of the employee to update" },
     rfc: { type: Type.STRING, description: "RFC of the employee to update" },
+    propertyToUpdate: {
+      type: Type.STRING,
+      description:
+        "The property of the employee to update (e.g., 'status', 'position', 'salary')",
+    },
+    newValue: {
+      type: Type.STRING,
+      description: "The new value for the specified property",
+    },
   },
-  required: [],
+  required: ["propertyToUpdate", "newValue"],
 };
 
 export const updateToolDeclaration: FunctionDeclaration = {
@@ -21,12 +30,14 @@ export const updateToolDeclaration: FunctionDeclaration = {
 };
 
 export const updateTool = async (
+  propertyToUpdate: string,
+  newValue: string,
   employeeId?: number,
   curp?: string,
   rfc?: string,
 ) => {
   if (!employeeId && !curp && !rfc) {
-    return "At least one identifier (employeeId, curp, or rfc) is required to delete an employee.";
+    return "At least one identifier (employeeId, curp, or rfc) is required to update an employee.";
   }
 
   const existingEmployee = await prisma.employees.findFirst({
@@ -47,7 +58,7 @@ export const updateTool = async (
     await prisma.employees.update({
       where: { id: existingEmployee.id },
       data: {
-        status: "inactive",
+        [propertyToUpdate]: newValue,
       },
     });
     return `Employee with ID ${existingEmployee.id} has been successfully updated.`;
