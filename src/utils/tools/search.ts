@@ -63,9 +63,9 @@ export const searchTool = async (
     }
 
     return `Employees found by query: ${JSON.stringify(results)}`;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error searching employees:", error);
 
-    return [];
+    return `Error searching employees: ${error.message ?? "Unknown error"}`;
   }
 };
