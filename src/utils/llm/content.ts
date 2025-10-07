@@ -25,6 +25,8 @@ const executeFunctionCall = async (
 
     case "updateEmployee":
       return await updateTool(
+        functionArgs.propertyToUpdate as string,
+        functionArgs.newValue as string,
         functionArgs.employeeId as number,
         functionArgs.curp as string,
         functionArgs.rfc as string,
