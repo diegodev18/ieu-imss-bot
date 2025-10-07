@@ -38,6 +38,8 @@ export const updateTool = async (
 ) => {
   if (!employeeId && !curp && !rfc) {
     return "At least one identifier (employeeId, curp, or rfc) is required to update an employee.";
+  } else if (propertyToUpdate === "id") {
+    return "Updating the employee ID is not allowed. Please choose a different property to update.";
   }
 
   const existingEmployee = await prisma.employees.findFirst({
