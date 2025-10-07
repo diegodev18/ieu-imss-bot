@@ -55,9 +55,6 @@ const getContent = async (contents: string | any[], rules: string = "") =>
       temperature: 0.7,
       maxOutputTokens: 500,
       systemInstruction: promptRules + rules,
-      thinkingConfig: {
-        thinkingBudget: 0,
-      },
       tools: [
         {
           functionDeclarations: [...toolsDeclarations],
