@@ -5,11 +5,12 @@ import { newTools } from "@/utils/tools/new";
 import { updateTool } from "@/utils/tools/update";
 import { listTool } from "@/utils/tools/list";
 import { searchTool } from "@/utils/tools/search";
+import type { Session } from "@/types";
 
 const executeFunctionCall = async (
   functionName: string,
   functionArgs: any,
-  session: any,
+  session: Session,
 ) => {
   switch (functionName) {
     case "addNewEmployee":
