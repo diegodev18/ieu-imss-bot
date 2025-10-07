@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
-import { Type } from "@google/genai";
+import { Type, type FunctionDeclaration, type Schema } from "@google/genai";
 
-const searchToolParams = {
+const searchToolParams: Schema = {
   type: Type.OBJECT,
   properties: {
     name: {
@@ -21,7 +21,7 @@ const searchToolParams = {
   required: [],
 };
 
-export const searchToolDeclaration = {
+export const searchToolDeclaration: FunctionDeclaration = {
   name: "searchTool",
   description:
     "Search for employees in the database. You can search by name only, CURP only, or both. All parameters are optional - use whatever information the user provides. If the user only gives you a name, search by name without asking for CURP or RFC.",
@@ -58,10 +58,14 @@ export const searchTool = async (
       take: limit,
     });
 
+    if (results.length === 0) {
+      return "No employees found matching the search criteria.";
+    }
+
     return `Employees found by query: ${JSON.stringify(results)}`;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error searching employees:", error);
 
-    return [];
+    return `Error searching employees: ${error.message ?? "Unknown error"}`;
   }
 };
