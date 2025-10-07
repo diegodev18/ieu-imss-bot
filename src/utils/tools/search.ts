@@ -58,6 +58,10 @@ export const searchTool = async (
       take: limit,
     });
 
+    if (results.length === 0) {
+      return "No employees found matching the search criteria.";
+    }
+
     return `Employees found by query: ${JSON.stringify(results)}`;
   } catch (error) {
     console.error("Error searching employees:", error);
