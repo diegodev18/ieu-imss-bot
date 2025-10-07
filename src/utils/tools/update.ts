@@ -1,27 +1,26 @@
 import { prisma } from "@/lib/prisma";
 import { Type, type FunctionDeclaration, type Schema } from "@google/genai";
 
-const deleteToolParams: Schema = {
+const updateToolParams: Schema = {
   type: Type.OBJECT,
   properties: {
     employeeId: {
       type: Type.NUMBER,
-      description: "ID of the employee to delete",
+      description: "ID of the employee to update",
     },
-    curp: { type: Type.STRING, description: "CURP of the employee to delete" },
-    rfc: { type: Type.STRING, description: "RFC of the employee to delete" },
+    curp: { type: Type.STRING, description: "CURP of the employee to update" },
+    rfc: { type: Type.STRING, description: "RFC of the employee to update" },
   },
   required: [],
 };
 
-export const deleteToolDeclaration: FunctionDeclaration = {
-  name: "deleteEmployee",
-  description:
-    "Delete an employee from the system or set their status to inactive",
-  parameters: deleteToolParams,
+export const updateToolDeclaration: FunctionDeclaration = {
+  name: "updateEmployee",
+  description: "Update an employee's information in the system",
+  parameters: updateToolParams,
 };
 
-export const deleteTool = async (
+export const updateTool = async (
   employeeId?: number,
   curp?: string,
   rfc?: string,
@@ -51,9 +50,9 @@ export const deleteTool = async (
         status: "inactive",
       },
     });
-    return `Employee with ID ${existingEmployee.id} has been successfully deleted.`;
+    return `Employee with ID ${existingEmployee.id} has been successfully updated.`;
   } catch (error) {
-    console.error("Error deleting employee:", error);
-    return "An error occurred while trying to delete the employee.";
+    console.error("Error updating employee:", error);
+    return "An error occurred while trying to update the employee.";
   }
 };
