@@ -58,7 +58,7 @@ export const searchTool = async (
       take: limit,
     });
 
-    return results;
+    return `Employees found by query: ${JSON.stringify(results)}`;
   } catch (error) {
     console.error("Error searching employees:", error);
 
