@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
-import { Type } from "@google/genai";
+import { Type, type FunctionDeclaration, type Schema } from "@google/genai";
 
-const deleteToolParams = {
+const deleteToolParams: Schema = {
   type: Type.OBJECT,
   properties: {
     employeeId: {
@@ -14,7 +14,7 @@ const deleteToolParams = {
   required: [],
 };
 
-export const deleteToolDeclaration = {
+export const deleteToolDeclaration: FunctionDeclaration = {
   name: "deleteEmployee",
   description:
     "Delete an employee from the system or set their status to inactive",

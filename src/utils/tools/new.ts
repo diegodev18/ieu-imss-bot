@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
-import { Type } from "@google/genai";
+import { Type, type FunctionDeclaration, type Schema } from "@google/genai";
 
-const newToolParams = {
+const newToolParams: Schema = {
   type: Type.OBJECT,
   properties: {
     name: { type: Type.STRING, description: "Full name of the employee" },
@@ -24,7 +24,7 @@ const newToolParams = {
   required: ["name", "curp", "rfc", "position", "salary"],
 };
 
-export const newToolDeclaration = {
+export const newToolDeclaration: FunctionDeclaration = {
   name: "addNewEmployee",
   description: "Create a new employee in the system",
   parameters: newToolParams,

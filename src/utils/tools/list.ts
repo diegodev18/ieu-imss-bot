@@ -1,13 +1,13 @@
 import { prisma } from "@/lib/prisma";
-import { Type } from "@google/genai";
+import { Type, type FunctionDeclaration, type Schema } from "@google/genai";
 
-const listToolParams = {
+const listToolParams: Schema = {
   type: Type.OBJECT,
   properties: {},
   required: [],
 };
 
-export const listToolDeclaration = {
+export const listToolDeclaration: FunctionDeclaration = {
   name: "listEmployees",
   description: "List all employees in the system (database)",
   parameters: listToolParams,
