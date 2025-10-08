@@ -4,6 +4,8 @@ import { sessionMiddleware } from "@/utils/middlewares";
 import { get as getContent } from "@/utils/llm/content";
 import type { ContextWithSession } from "@/types";
 
+console.log("Starting bot...");
+
 bot.use(sessionMiddleware);
 
 bot.start((ctx) => {
