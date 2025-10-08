@@ -31,6 +31,10 @@ bot.on("text", async (ctx: ContextWithSession) => {
   ctx.reply(response ?? "No response from LLM.");
 });
 
-bot.launch(() => {
-  console.log("Bot is running...");
-});
+bot
+  .launch(() => {
+    console.log("Bot is running...");
+  })
+  .catch((err) => {
+    console.error("Failed to launch the bot:", err);
+  });
