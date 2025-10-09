@@ -1,7 +1,6 @@
 import { ai } from "@/lib/llm";
 import { rules as promptRules } from "@/utils/llm/prompt";
-import { toolsDeclarations } from "@/utils/tools";
-import { executeFunctionCall } from "@/utils/tools";
+import { toolsDeclarations, executeFunctionCall } from "@/utils/tools";
 
 const getContent = async (contents: string | any[], rules: string = "") =>
   await ai.models.generateContent({
