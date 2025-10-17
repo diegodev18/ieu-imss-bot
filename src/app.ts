@@ -19,6 +19,11 @@ bot.help((ctx) => {
 bot.command("auth", commands.auth.action);
 
 bot.on("text", async (ctx: ContextWithSession) => {
+  console.log(
+    `Received text from ${ctx.from.username || ctx.from.first_name || "unknown"} message:`,
+    ctx.message.text,
+  );
+
   if (!ctx.session) {
     ctx.reply(
       "No session found. Please start a session first. Use /auth <username> <password>",
