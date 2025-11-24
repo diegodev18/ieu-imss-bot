@@ -1,4 +1,4 @@
-import { newTools, newToolDeclaration } from "@/utils/tools/new";
+import { newTool, newToolDeclaration } from "@/utils/tools/new";
 import { updateTool, updateToolDeclaration } from "@/utils/tools/update";
 import { listTool, listToolDeclaration } from "@/utils/tools/list";
 import { searchTool, searchToolDeclaration } from "@/utils/tools/search";
@@ -19,7 +19,7 @@ export const executeFunctionCall = async (
 ) => {
   switch (functionName) {
     case "addNewEmployee":
-      return await newTools(
+      return await newTool(
         functionArgs.name as string,
         functionArgs.curp as string,
         functionArgs.rfc as string,
@@ -27,6 +27,7 @@ export const executeFunctionCall = async (
         functionArgs.salary as number,
         (functionArgs.status as "active" | "inactive") || "active",
         session.company.id as number,
+        functionArgs.socialSecurityNumber as string,
       );
 
     case "updateEmployee":
@@ -43,7 +44,7 @@ export const executeFunctionCall = async (
 
     case "searchTool":
       return await searchTool(
-        functionArgs.name as string | undefined,
+        functionArgs.fullName as string | undefined,
         functionArgs.curp as string | undefined,
         functionArgs.limit as number | undefined,
       );

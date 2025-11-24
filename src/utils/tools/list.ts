@@ -20,7 +20,7 @@ export const listTool = async (companyId: number) => {
 
   try {
     const employees = await prisma.employees.findMany({
-      where: { company_id: companyId },
+      where: { created_by: companyId },
     });
 
     if (employees.length === 0) {
