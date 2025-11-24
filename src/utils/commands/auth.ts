@@ -13,18 +13,17 @@ export const authCommand = async (ctx: ContextWithSession) => {
   }
 
   const tokens = message?.split(" ");
-  const user = tokens?.[1];
-  const pass = tokens?.[2];
+  const authToken = tokens?.[1];
 
-  if (!user || !pass) {
-    await ctx.reply("Uso: /auth <username> <contraseña>");
+  if (!authToken) {
+    await ctx.reply("Uso: /auth <auth_token>");
     return;
   }
 
-  const isAuth = await prisma.admins.findFirst({
-    where: { username: parseInt(user), password: pass },
+  const authTokenRecord = await prisma.bot_sessions.findUnique({
+    where: { auth_token: authToken },
   });
-  if (!isAuth || isAuth.status !== "active") {
+  if (!authTokenRecord || authTokenRecord.used) {
     await ctx.reply("Credenciales inválidas");
     return;
   }
@@ -38,26 +37,13 @@ export const authCommand = async (ctx: ContextWithSession) => {
   await ctx.reply("Autenticación exitosa, registrando sesión...");
 
   try {
-    const updateToken = await prisma.admins.update({
-      where: { id: isAuth.id },
-      data: { status: "inactive" },
+    const updateToken = await prisma.bot_sessions.update({
+      where: { id: authTokenRecord.id },
+      data: { used: true, chat_id: chatId, chat_metadata: ctx.from ?? {} },
     });
     console.log("Token actualizado:", updateToken.id);
   } catch (error) {
     await ctx.reply("Error al actualizar el estado del token.");
-    return;
-  }
-  try {
-    const createSession = await prisma.sessions.create({
-      data: {
-        chat_id: chatId,
-        admin_id: isAuth.id,
-        user_metadata: JSON.stringify(ctx.from),
-      },
-    });
-    console.log("Sesión creada:", createSession.id);
-  } catch (error) {
-    await ctx.reply("Error al crear la sesión.");
     return;
   }
 
