@@ -4,7 +4,7 @@ import { Type, type FunctionDeclaration, type Schema } from "@google/genai";
 const searchToolParams: Schema = {
   type: Type.OBJECT,
   properties: {
-    name: {
+    fullName: {
       type: Type.STRING,
       description: "The name of employee to search for in the database",
     },
@@ -29,7 +29,7 @@ export const searchToolDeclaration: FunctionDeclaration = {
 };
 
 export const searchTool = async (
-  name: string | undefined,
+  fullName: string | undefined,
   curp: string | undefined,
   limit = 5,
 ) => {
@@ -37,10 +37,10 @@ export const searchTool = async (
     const results = await prisma.employees.findMany({
       where: {
         OR: [
-          name
+          fullName
             ? {
-                name: {
-                  contains: name,
+                full_name: {
+                  contains: fullName,
                   mode: "insensitive",
                 },
               }

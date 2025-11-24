@@ -20,8 +20,19 @@ const newToolParams: Schema = {
       enum: ["active", "inactive"],
       description: "Employment status",
     },
+    socialSecurityNumber: {
+      type: Type.STRING,
+      description: "Social Security Number of the employee",
+    },
   },
-  required: ["name", "curp", "rfc", "position", "salary"],
+  required: [
+    "name",
+    "curp",
+    "rfc",
+    "position",
+    "salary",
+    "socialSecurityNumber",
+  ],
 };
 
 export const newToolDeclaration: FunctionDeclaration = {
@@ -38,6 +49,7 @@ export const newTools = async (
   salary: number,
   status: "active" | "inactive" = "active",
   companyId: number,
+  socialSecurityNumber: string,
 ) => {
   const missingFields = [name, curp, rfc, position, salary, companyId].filter(
     (field) => !field,
@@ -59,13 +71,14 @@ export const newTools = async (
   try {
     const createdEmployee = await prisma.employees.create({
       data: {
-        name,
+        full_name: name,
         curp,
         rfc,
         position,
         salary,
         status,
-        company_id: companyId,
+        created_by: companyId,
+        social_security_number: socialSecurityNumber,
       },
     });
     return `Employee created successfully with ID: ${createdEmployee.id}`;
