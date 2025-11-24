@@ -29,7 +29,7 @@ export const authCommand = async (ctx: ContextWithSession) => {
   }
 
   const chatId = ctx.chat?.id;
-  if (!chatId) {
+  if (!chatId || (typeof chatId !== "number" && typeof chatId !== "string")) {
     await ctx.reply("No se pudo obtener el chat ID.");
     return;
   }
@@ -39,7 +39,11 @@ export const authCommand = async (ctx: ContextWithSession) => {
   try {
     const updateToken = await prisma.bot_sessions.update({
       where: { id: authTokenRecord.id },
-      data: { used: true, chat_id: chatId, chat_metadata: ctx.from ?? {} },
+      data: {
+        used: true,
+        chat_id: typeof chatId === "number" ? chatId.toString() : chatId,
+        chat_metadata: ctx.from ?? {},
+      },
     });
     console.log("Token actualizado:", updateToken.id);
   } catch (error) {
