@@ -30,6 +30,16 @@ model companies {
   password   String
 }
 
+model bot_sessions {
+  id            Int       @id @default(autoincrement())
+  auth_token    String?   @unique @default(dbgenerated("\"substring\"(encode(gen_random_bytes(9), 'base64'::text), 1, 12)"))
+  used          Boolean?  @default(false)
+  created_by    Int
+  created_at    DateTime? @default(now()) @db.Timestamp(6)
+  chat_id       String?
+  chat_metadata Json?     @default("{}")
+}
+
 enum employees_status {
   active
   inactive
