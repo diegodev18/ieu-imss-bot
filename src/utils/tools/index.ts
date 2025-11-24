@@ -27,6 +27,7 @@ export const executeFunctionCall = async (
         functionArgs.salary as number,
         (functionArgs.status as "active" | "inactive") || "active",
         session.company.id as number,
+        functionArgs.socialSecurityNumber as string,
       );
 
     case "updateEmployee":
@@ -43,7 +44,7 @@ export const executeFunctionCall = async (
 
     case "searchTool":
       return await searchTool(
-        functionArgs.name as string | undefined,
+        functionArgs.fullName as string | undefined,
         functionArgs.curp as string | undefined,
         functionArgs.limit as number | undefined,
       );
