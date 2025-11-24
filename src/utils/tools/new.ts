@@ -41,7 +41,7 @@ export const newToolDeclaration: FunctionDeclaration = {
   parameters: newToolParams,
 };
 
-export const newTools = async (
+export const newTool = async (
   name: string,
   curp: string,
   rfc: string,

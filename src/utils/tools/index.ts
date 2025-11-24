@@ -1,4 +1,4 @@
-import { newTools, newToolDeclaration } from "@/utils/tools/new";
+import { newTool, newToolDeclaration } from "@/utils/tools/new";
 import { updateTool, updateToolDeclaration } from "@/utils/tools/update";
 import { listTool, listToolDeclaration } from "@/utils/tools/list";
 import { searchTool, searchToolDeclaration } from "@/utils/tools/search";
@@ -19,7 +19,7 @@ export const executeFunctionCall = async (
 ) => {
   switch (functionName) {
     case "addNewEmployee":
-      return await newTools(
+      return await newTool(
         functionArgs.name as string,
         functionArgs.curp as string,
         functionArgs.rfc as string,
