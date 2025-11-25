@@ -3,3 +3,4 @@ dist/
 .env
 postgres/
 .DS_Store
+src/lib/generated/
