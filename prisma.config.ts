@@ -1,14 +1,7 @@
-import { defineConfig } from "prisma/config";
-import { config } from "dotenv";
-
-if (process.env.NODE_ENV !== "production") {
-  config({ path: ".env", override: true, quiet: true });
-}
+import { defineConfig, env } from "prisma/config";
 
 export default defineConfig({
   datasource: {
-    url:
-      process.env.DATABASE_URL ||
-      "postgresql://user:password@localhost:5432/mydb",
+    url: env("DATABASE_URL"),
   },
 });
