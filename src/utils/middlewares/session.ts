@@ -11,29 +11,23 @@ export const sessionMiddleware = async (
     return;
   }
 
-  const session = (await prisma.sessions.findFirst({
-    where: { chat_id: chatId },
-  })) as any;
+  let session;
 
+  session = await prisma.bot_sessions.findFirst({
+    where: { chat_id: chatId.toString() },
+  });
   if (!session) {
     return await next();
   }
+  session = { ...session, chat_metadata: session.chat_metadata || {} };
 
-  try {
-    session.user_metadata = session.user_metadata
-      ? JSON.parse(session.user_metadata)
-      : {};
-  } catch {}
-
-  const admin = await prisma.admins.findFirst({
-    where: { id: session.id },
+  const company = await prisma.bot_sessions.findFirst({
+    where: { id: session.id as number },
   });
-
-  session.company = admin?.company_id
-    ? await prisma.companies.findFirst({
-        where: { id: admin.company_id },
-      })
-    : null;
+  if (!company) {
+    return await next();
+  }
+  session = { ...session, company };
 
   (ctx as any).session = session;
 
