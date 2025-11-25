@@ -22,7 +22,7 @@ services:
       - ./:/usr/src/app
     environment:
       - BOT_TOKEN
-      - PSQL_CONNECTION_STRING
+      - DATABASE_URL
       - GEMINI_API_KEY
     depends_on:
       - db

@@ -8,7 +8,7 @@ if (process.env.NODE_ENV !== "production") {
 export default defineConfig({
   datasource: {
     url:
-      process.env.PSQL_CONNECTION_STRING ||
+      process.env.DATABASE_URL ||
       "postgresql://user:password@localhost:5432/mydb",
   },
 });
