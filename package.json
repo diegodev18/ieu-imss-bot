@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@google/genai": "1.22.0",
+    "@prisma/adapter-pg": "7.0.0",
     "@prisma/client": "7.0.0",
     "prisma": "7.0.0",
     "telegraf": "4.16.3"
