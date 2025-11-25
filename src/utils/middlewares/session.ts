@@ -11,8 +11,8 @@ export const sessionMiddleware = async (
     return;
   }
 
-  const session = (await prisma.sessions.findFirst({
-    where: { chat_id: chatId },
+  const session = (await prisma.bot_sessions.findFirst({
+    where: { chat_id: chatId.toString() },
   })) as any;
 
   if (!session) {
@@ -25,13 +25,13 @@ export const sessionMiddleware = async (
       : {};
   } catch {}
 
-  const admin = await prisma.admins.findFirst({
-    where: { id: session.id },
+  const admin = await prisma.companies.findUnique({
+    where: { id: session.created_by as number },
   });
 
-  session.company = admin?.company_id
-    ? await prisma.companies.findFirst({
-        where: { id: admin.company_id },
+  session.company = admin?.id
+    ? await prisma.companies.findUnique({
+        where: { id: admin.id },
       })
     : null;
 
