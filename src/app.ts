@@ -26,14 +26,14 @@ bot.on("text", async (ctx: ContextWithSession) => {
 
   if (!ctx.session) {
     ctx.reply(
-      "No session found. Please start a session first. Use /auth <username> <password>",
+      "No hay sesión. Por favor inicia una sesión primero. Usa /auth <auth_token> para autenticarte.",
     );
     return;
   }
 
   const response = await getContent(ctx.message.text, "", ctx.session);
 
-  ctx.reply(response ?? "No response from LLM.");
+  ctx.reply(response ?? "Perdon, no pude procesar tu mensaje.");
 });
 
 bot

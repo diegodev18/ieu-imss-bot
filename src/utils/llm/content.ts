@@ -72,7 +72,7 @@ export const get = async (
       }
     }
 
-    return response.text ?? "No response from LLM.";
+    return response.text ?? "Perdon, no pude procesar tu mensaje.";
   } catch (error) {
     console.error("Error generating content:", error);
 
