@@ -1,11 +1,16 @@
 [phases.setup]
-nixPkgs = ["nodejs_20"]
+nixPkgs = ["nodejs_22", "pnpm"]
+env = { NODE_ENV = "production" }
 
 [phases.install]
-cmds = ["npm install --omit=dev"]
+cmds = ["pnpm install --frozen-lockfile"]
 
 [phases.build]
-cmds = ["npm run build"]
+cmds = ["pnpm prisma generate", "pnpm run build"]
 
 [start]
-cmd = "npm start"
+cmd = "pnpm start"
+
+[variables]
+NIXPACKS_PATH = "/app"
+NODE_ENV = "production"
